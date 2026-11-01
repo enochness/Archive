@@ -203,6 +203,23 @@ C26105 | (Handwritten) Day 87
 C26106 | (Handwritten) Day 88
 C26107 | (Handwritten) Day 89
 C26108 | (Handwritten) Day 90
+C26109 | (Handwritten) Day 91
+B26110 | 2018 USACO Third Bronze Problem 1
+
+B26111 | 2016 USACO Second Bronze Problem 1
+B26112 | 2020 USACO First Bronze Problem 1
+B26113 | 2020 USACO Second Bronze Problem 1
+B26114 | 2019 USACO US Open Bronze Problem 1
+B26115 | Codeforces Problem 4A
+B26116 | Codeforces Problem 231A
+B26117 | Codeforces Problem 546A
+B26118 | 2018 USACO First Bronze Problem 1
+B26119 | 2017 USACO Open Bronze Problem 1
+B26120 | 2016 USACO Third Bronze Problem 2
+
+B26121 | 2019 USACO Second Bronze Problem 1
+B26122 | 2015 USACO First Bronze Problem 2
+B26123 | 2017 USACO First Bronze Problem 2
 ----------------------------------------------------------------------
 
 END OF INDEX
