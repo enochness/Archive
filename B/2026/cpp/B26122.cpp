@@ -1,4 +1,4 @@
-/** IN PROGRESS
+/**
  * Enoch Yu
  * 2015 USACO First Bronze
  * Problem 2. Speeding Ticket
@@ -41,6 +41,19 @@ int main() {
             if (bessie[i][0] >= actual[j][0]) {
                 if (MAX < bessie[i][1] - actual[j][1]) {
                     MAX = bessie[i][1] - actual[j][1];
+                }
+                counter++;
+            } else {
+                break;
+            }
+        }
+    }
+    counter = 0;
+    for (int i = 0; i < M; i++) {
+        for (int j = counter; j < N; j++) {
+            if (actual[i][0] >= bessie[j][0]) {
+                if (MAX < bessie[j][1] - actual[i][1]) {
+                    MAX = bessie[j][1] - actual[i][1];
                 }
                 counter++;
             } else {
