@@ -220,7 +220,8 @@ B26120 | 2016 USACO Third Bronze Problem 2
 B26121 | 2019 USACO Second Bronze Problem 1
 B26122 | 2015 USACO First Bronze Problem 2
 B26123 | 2017 USACO First Bronze Problem 2
-C26124 | (Handwritten) Day 91
+C26124 | (Handwritten) Day 92
+C26125 | (Handwritten) Day 93
 ----------------------------------------------------------------------
 
 END OF INDEX
