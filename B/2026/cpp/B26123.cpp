@@ -13,15 +13,12 @@
 #include <vector>
 using namespace std;
 
-int findMis(int N, vector<int> row) {
-    int pos = N + 1;
+vector<int> back(int N, vector<int> row, vector<int> ID) {
+    vector<int> TEMPID(N);
     for (int i = 0; i < N; i++) {
-        if (row[i] != i + 1) {
-            pos = i;
-            break;
-        }
+        TEMPID[i] = ID[row[i]-1];
     }
-    return pos;
+    return TEMPID;
 }
 
 int main() {
@@ -39,39 +36,14 @@ int main() {
         cin >> ID[i];
     }
 
-    /*
-    vector<int> row2;
-    for (int i = 0; i < 3; i++) {
-        row2 = row;
-
-        for (int j = 0; j < N; j++) {
-            int index1 = findMis(N, row2);
-
-            if (findMis(N, row2) != N + 1) {
-                int index2 = row2[index1] - 1;
-                int a = ID[index2];
-                ID[index2] = ID[index1];
-                ID[index1] = a;
-
-                int b = row2[index2];
-                row2[index2] = row2[index1];
-                row2[index1] = b;
-            } else {
-                break;
-            }
-        }
-    }
-    */
-    vector<int> IDbak = ID;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < N; j++) {
-            ID[j] = IDbak[row[j]-1];
-        }
-    }
+    vector<int> PREVID = back(N, row, ID);
+    PREVID = back(N, row, PREVID);
+    PREVID = back(N, row, PREVID);
     for (int i = 0; i < N; i++) {
-        cout << ID[i] << "\n";
+        cout << PREVID[i] << "\n";
     }
 
     return 0;
 }
+
 
