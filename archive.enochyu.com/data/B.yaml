@@ -1,4 +1,16 @@
 items:
+  - title: "2016 USACO First Bronze Problem 3"
+    access: "https://github.com/enochyu-official/Archive/blob/main/B/2026/cpp/B26127.cpp"
+    author: "Enoch Yu"
+    date: "8 November 2026"
+    category: "USACO"
+
+  - title: "2018 USACO First Bronze Problem 2"
+    access: "https://github.com/enochyu-official/Archive/blob/main/B/2026/cpp/B26126.cpp"
+    author: "Enoch Yu"
+    date: "8 November 2026"
+    category: "USACO"
+
   - title: "2017 USACO First Bronze Problem 2"
     access: "https://github.com/enochyu-official/Archive/blob/main/B/2026/cpp/B26123.cpp"
     author: "Enoch Yu"
