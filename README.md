@@ -1,4 +1,4 @@
 # Enoch's Archive
 
-Archive/CDN for other websites
+Public archive and CDN for other websites
 
