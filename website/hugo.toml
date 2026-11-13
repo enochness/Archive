@@ -29,6 +29,3 @@ disableKinds = ["taxonomy"]
     source = "../C/pdf"
     target = "static/c/pdf"
 
-[security]
-allowContent = ['^text/markdown$']
-
