@@ -1,0 +1,36 @@
+{{- $rule := strings.Repeat 70 "-" -}}
+{{- $double := strings.Repeat 70 "=" -}}
+{{- $items := slice -}}
+{{- range hugo.Data.items.items -}}
+  {{- $items = $items | append (merge . (dict "key" (substr .id 1))) -}}
+{{- end -}}
+{{- $items = sort $items "key" -}}
+{{- $last := sub (len $items) 1 -}}
+{{- $year := "" -}}
+Archive Index
+
+{{ $double }}
+
+Prefix
+{{ $rule }}
+A | MATH
+B | Computer Science
+C | Teaching
+{{ $rule }}
+{{ range $i, $item := $items -}}
+  {{- $y := substr $item.id 1 2 -}}
+  {{- if ne $y $year -}}
+    {{- $year = $y -}}
+    {{- printf "\n\nYEAR 20%s\n%s\n" $y $rule -}}
+  {{- end -}}
+  {{- if eq $item.standalone "Y" }}(Standalone) {{ end -}}
+  {{- $item.id }} | {{ if eq $item.handwritten "Y" }}(Handwritten) {{ end }}{{ $item.title }}
+{{ if and (lt $i $last) (eq (mod (int (strings.TrimLeft "0" (substr $item.id 3))) 10) 0) (eq (substr (index $items (add $i 1)).id 1 2) $y) }}
+{{ end -}}
+{{- end -}}
+{{ $rule }}
+
+END OF INDEX
+
+{{ $double }}
+

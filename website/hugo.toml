@@ -1,0 +1,34 @@
+baseURL = 'https://cdn.enochyu.com/'
+title = 'Enoch Yu - CDN'
+locale = 'en-us'
+
+enableRobotsTXT = true
+disableKinds = ["taxonomy"]
+
+[params]
+  author = "Enoch Yu"
+  favicon = "/favicon/favicon.ico"
+
+[outputFormats.index]
+  mediaType = "text/plain"
+  baseName = "index"
+  isPlainText = true
+  notAlternative = true
+
+[outputs]
+  home = ["html", "rss", "index"]
+
+[module]
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "../A/pdf"
+    target = "static/a/pdf"
+  [[module.mounts]]
+    source = "../C/pdf"
+    target = "static/c/pdf"
+
+[security]
+allowContent = ['^text/markdown$']
+

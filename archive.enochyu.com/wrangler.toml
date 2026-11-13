@@ -1,9 +1,0 @@
-name = "archive-view-counter-db"
-compatibility_date = "2026-07-23"
-main = "src/index.ts"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "archive-view-counter-db"
-database_id = "5d29ff5a-8f6a-44af-8354-9c359ab37eb8"
-
