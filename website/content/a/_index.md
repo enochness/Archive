@@ -1,5 +1,4 @@
 +++
 title = "Mathematics"
-layout = "list"
 +++
 

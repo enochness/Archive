@@ -7,7 +7,6 @@ disableKinds = ["taxonomy"]
 
 [params]
   author = "Enoch Yu"
-  favicon = "/favicon/favicon.ico"
 
 [outputFormats.index]
   mediaType = "text/plain"
@@ -16,7 +15,7 @@ disableKinds = ["taxonomy"]
   notAlternative = true
 
 [outputs]
-  home = ["html", "rss", "index"]
+  home = ["html", "index"]
 
 [module]
   [[module.mounts]]
@@ -28,7 +27,4 @@ disableKinds = ["taxonomy"]
   [[module.mounts]]
     source = "../C/pdf"
     target = "static/c/pdf"
-
-[security]
-allowContent = ['^text/markdown$']
 

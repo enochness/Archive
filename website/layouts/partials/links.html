@@ -1,0 +1,17 @@
+{{- $links := slice -}}
+
+{{- with .item.pdf -}}
+  {{- $label := cond (eq $.item.handwritten "Y") "Handwritten PDF" "PDF" -}}
+  {{- $links = $links | append (dict "url" . "label" $label) -}}
+{{- end -}}
+
+{{- with .item.video -}}
+  {{- $links = $links | append (dict "url" . "label" "Video") -}}
+{{- end -}}
+
+{{- with .item.source -}}
+  {{- $label := cond (eq $.letter "B") "Code (Git)" "Source (Git)" -}}
+  {{- $links = $links | append (dict "url" . "label" $label) -}}
+{{- end -}}
+
+{{- return $links -}}

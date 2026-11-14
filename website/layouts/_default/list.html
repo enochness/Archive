@@ -1,52 +1,69 @@
 {{ define "main" }}
-{{ $letter := upper .Section }}
-{{ $items := where hugo.Data.items.items "id" "like" (printf "^%s" $letter) }}
-<header class="page-header">
-  <h1>{{ .Title }}</h1>
-</header>
-<section class="list-container">
-  <table class="list">
-    <thead>
-      <tr>
-        <th class="list-right">No.</th>
-        <th>Title</th>
-        <th>Access</th>
-        <th class="list-right">Author</th>
-        <th class="list-right">Date</th>
-        <th class="list-right">Category</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{ $number := len $items }}
-      {{ range $item := $items }}
-        {{ $links := slice }}
-        {{ with $item.pdf }}
-          {{ $label := cond (eq $item.handwritten "Y") "Handwritten PDF" "PDF" }}
-          {{ $links = $links | append (dict "url" . "label" $label) }}
-        {{ end }}
-        {{ with $item.video }}
-          {{ $links = $links | append (dict "url" . "label" "Video") }}
-        {{ end }}
-        {{ with $item.source }}
-          {{ $label := cond (eq $letter "B") "Code (Git)" "Source (Git)" }}
-          {{ $links = $links | append (dict "url" . "label" $label) }}
-        {{ end }}
-        <tr data-category="{{ $item.category }}">
-          <td class="list-right">{{ $number }}.</td>
-          <td>{{ $item.title }}</td>
-          <td>
-            {{- range $i, $link := $links -}}
-              {{- if $i }}, {{ end -}}
-              <a href="{{ $link.url }}">{{ $link.label }}</a>
-            {{- end -}}
-          </td>
-          <td class="list-right">{{ $item.author }}</td>
-          <td class="list-right">{{ $item.date }}</td>
-          <td class="list-right">{{ $item.category }}</td>
-        </tr>
-        {{ $number = sub $number 1 }}
-      {{ end }}
-    </tbody>
-  </table>
-</section>
+{{- $letter := upper .Section -}}
+{{- $items := where hugo.Data.items.items "id" "like" (printf "^%s" $letter) -}}
+
+{{- $categories := slice -}}
+{{- range $items -}}
+  {{- $categories = $categories | append .category -}}
+{{- end -}}
+{{- $categories = $categories | uniq | sort -}}
+
+{{- $gap := "  " -}}
+{{- $noWidth := 4 -}}
+{{- $nameWidth := 60 -}}
+{{- $dateWidth := 13 -}}
+{{- $accessWidth := 24 }}
+
+<h1 id="heading">Index of {{ .RelPermalink }}</h1>
+<pre>
+  {{- printf "%-*s" $noWidth "No." }}{{ $gap }}
+  {{- "Name" }}{{ partial "pad.html" (dict "s" "Name" "w" $nameWidth) }}{{ $gap }}
+  {{- "Last modified" }}{{ $gap }}{{ $gap }}
+  {{- "Access" }}{{ partial "pad.html" (dict "s" "Access" "w" $accessWidth) }}
+  {{- "Category" }}
+<hr>
+  {{- printf "%*s" $noWidth "" }}{{ $gap -}}
+  <a id="parent" href="/">Parent Directory</a>
+{{ range $categories }}
+  {{- $name := printf "%s/" . -}}
+  <span class="dir">
+    {{- printf "%*s" $noWidth "" }}{{ $gap -}}
+    <a href="?category={{ . | urlquery }}">{{ $name }}</a>
+    {{- partial "pad.html" (dict "s" $name "w" $nameWidth) }}{{ $gap }}
+    {{- printf "%*s" $dateWidth "-" }}{{ $gap }}{{ $gap }}
+    {{- printf "%*s" $accessWidth "" }}
+    {{- len (where $items "category" .) }} items
+</span>
+{{- end }}<hr>
+{{- $number := len $items }}
+{{- range $item := $items }}
+  {{- $date := partial "date.html" $item.date }}
+  {{- $links := partial "links.html" (dict "item" $item "letter" $letter) }}
+  {{- $access := delimit (apply $links "index" "." "label") ", " -}}
+  <span data-category="{{ $item.category }}">
+    {{- printf "%03d." $number }}{{ $gap }}
+    {{- $item.title }}{{ partial "pad.html" (dict "s" $item.title "w" $nameWidth) }}{{ $gap }}
+    {{- printf "%*s" $dateWidth $date }}{{ $gap }}{{ $gap }}
+    {{- range $i, $link := $links }}{{ if $i }}, {{ end }}<a href="{{ $link.url }}">{{ $link.label }}</a>{{ end }}
+    {{- partial "pad.html" (dict "s" $access "w" $accessWidth) }}
+    {{- $item.category }}
+</span>
+  {{- $number = sub $number 1 }}
+{{- end -}}
+<hr></pre>
+
+<script>
+const category = new URLSearchParams(location.search).get('category');
+if (category) {
+  const path = location.pathname + category + '/';
+  document.title = 'Index of ' + path;
+  document.getElementById('heading').textContent = 'Index of ' + path;
+  document.getElementById('parent').href = location.pathname;
+  document.querySelectorAll('pre .dir').forEach(el => el.hidden = true);
+  document.querySelectorAll('pre [data-category]').forEach(el => {
+    el.hidden = el.dataset.category !== category;
+  });
+}
+</script>
 {{ end }}
+
