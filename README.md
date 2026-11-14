@@ -1,4 +1,4 @@
-# Enoch's Archive
+# cdn.enochyu.com
 
-Public archive and CDN for other websites
+CDN for other websites and a public archive
 
