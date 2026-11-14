@@ -1,28 +1,29 @@
 {{ define "main" }}
-<div class="profile-section">
-  <h2>Hi there &#x1F44B;</h2>
-  <p>
-    This website now serves as the CDN and public archive for many
-    other websites that I maintain. It is no longer for normal browser
-    traffic, but please feel free to explore. In the meantime,
-    check out the following sites!
-  </p>
-  <h3>Visit...</h3>
-  <ul>
-    <li><a href="https://librenotebook.enochyu.com/">LibreNotebook</a></li>
-    <li><a href="https://nanumlearn.org/">Nanum Learn</a></li>
-    <li><a href="https://www.youtube.com/@enochness">YouTube</a></li>
-    <li><a href="https://github.com/enochness">GitHub</a></li>
-  </ul>
-  <h3>Stats</h3>
-  <ul>
-    {{ $items := hugo.Data.items.items }}
-    <li>Total Items: <span class="stat-num">{{ len $items }}</span></li>
-    {{ range sort .Site.Sections "Section" }}
-      {{ $letter := upper .Section }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>: <span class="stat-num">{{ len (where $items "id" "like" (printf "^%s" $letter)) }}</span></li>
-    {{ end }}
-  </ul>
-</div>
+{{- $items := hugo.Data.items.items }}
+<h1>cdn.enochyu.com</h1>
+<h1>Index of /</h1>
+<p>
+  Hi there!
+  This website now serves as the CDN and public archive for many
+  other websites that I maintain. It is no longer for normal browser
+  traffic, but please feel free to explore.
+  <br><br>
+  In the meantime, check out the following sites:
+  <br>
+  <a href="https://librenotebook.enochyu.com/">LibreNotebook</a>,
+  <a href="https://nanumlearn.org/">Nanum Learn</a>,
+  <a href="https://www.youtube.com/@enochness">YouTube</a>,
+  <a href="https://github.com/enochness">GitHub</a>.
+</p>
+<pre>Name{{ partial "pad.html" (dict "s" "Name" "w" 24) }}Items  Description
+<hr>
+{{- range sort .Site.Sections "Section" -}}
+{{- $name := printf "%s/" .Section -}}
+{{- $count := len (where $items "id" "like" (printf "^%s" (upper .Section))) -}}
+<a href="{{ .RelPermalink }}">{{ $name }}</a>{{ partial "pad.html" (dict "s" $name "w" 24) }}{{ printf "%5d" $count }}  {{ .Title }}
+{{ end -}}
+<a href="/LibreNotebook.pdf">LibreNotebook.pdf</a>{{ partial "pad.html" (dict "s" "LibreNotebook.pdf" "w" 24) }}    -  LibreNotebook
+<a href="/index.txt">index.txt</a>{{ partial "pad.html" (dict "s" "index.txt" "w" 24) }}{{ printf "%5d" (len $items) }}  Index
+<hr></pre>
 {{ end }}
 

@@ -1,0 +1,13 @@
+{{- $months := dict "January" "01" "February" "02" "March" "03"
+                    "April" "04" "May" "05" "June" "06" "July" "07"
+                    "August" "08" "September" "09" "October" "10"
+                    "November" "11" "December" "12" -}}
+{{- $p := split . " " -}}
+{{- $out := "-" -}}
+{{- if eq (len $p) 3 -}}
+{{- $d := index $p 0 -}}
+{{- if eq (len $d) 1 }}{{ $d = print "0" $d }}{{ end -}}
+{{- $out = printf "%s-%s-%s" $d (index $months (index $p 1)) (index $p 2) -}}
+{{- end -}}
+{{- return $out -}}
+

@@ -1,11 +1,7 @@
+{{ define "title" }}404 Not Found{{ end }}
 {{ define "main" }}
-<div class="error-page">
-  <h1>404</h1>
-  <p>Page Not Found</p>
-  <br>
-  <br>
-  <a href="{{ .Site.BaseURL }}">Go Home</a>
-  <br>
-</div>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<p><a href="/">Go Home</a></p>
+<hr>
 {{ end }}
-
