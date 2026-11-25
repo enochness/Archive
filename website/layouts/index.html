@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{- $items := hugo.Data.items.items }}
+{{- $items := hugo.Data.index.items }}
 <h1>cdn.enochyu.com</h1>
 <h1>Index of /</h1>
 <p>
@@ -22,7 +22,6 @@
 {{- $count := len (where $items "id" "like" (printf "^%s" (upper .Section))) -}}
 <a href="{{ .RelPermalink }}">{{ $name }}</a>{{ partial "pad.html" (dict "s" $name "w" 24) }}{{ printf "%5d" $count }}  {{ .Title }}
 {{ end -}}
-<a href="/LibreNotebook.pdf">LibreNotebook.pdf</a>{{ partial "pad.html" (dict "s" "LibreNotebook.pdf" "w" 24) }}    -  LibreNotebook
 <a href="/index.txt">index.txt</a>{{ partial "pad.html" (dict "s" "index.txt" "w" 24) }}{{ printf "%5d" (len $items) }}  Index
 <hr></pre>
 {{ end }}

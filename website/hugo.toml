@@ -28,3 +28,6 @@ disableKinds = ["taxonomy"]
     source = "../C/pdf"
     target = "static/c/pdf"
 
+  [[module.mounts]]
+    source = "../index.yaml"
+    target = "data/index.yaml"

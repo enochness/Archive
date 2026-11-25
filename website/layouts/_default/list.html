@@ -1,6 +1,23 @@
 {{ define "main" }}
 {{- $letter := upper .Section -}}
-{{- $items := where hugo.Data.items.items "id" "like" (printf "^%s" $letter) -}}
+{{- $months := dict "January" "01" "February" "02" "March" "03"
+                    "April" "04" "May" "05" "June" "06" "July" "07"
+                    "August" "08" "September" "09" "October" "10"
+                    "November" "11" "December" "12" -}}
+{{- $items := slice -}}
+{{- range where hugo.Data.index.items "id" "like" (printf "^%s" $letter) -}}
+  {{- $p := split .date " " -}}
+  {{- $d := "00" -}}
+  {{- if eq (len $p) 3 -}}
+    {{- $d = index $p 0 -}}
+    {{- if eq (len $d) 1 }}{{ $d = print "0" $d }}{{ end -}}
+    {{- $p = after 1 $p -}}
+  {{- end -}}
+  {{- $key := printf "%s%s%s" (index $p 1) (index $months (index $p 0)) $d -}}
+  {{- $shown := cond (eq $d "00") "-" $key -}}
+  {{- $items = $items | append (merge . (dict "sortkey" (printf "%s-%s" $key .id) "shown" $shown)) -}}
+{{- end -}}
+{{- $items = sort $items "sortkey" "desc" -}}
 
 {{- $categories := slice -}}
 {{- range $items -}}
@@ -12,7 +29,8 @@
 {{- $noWidth := 4 -}}
 {{- $nameWidth := 60 -}}
 {{- $dateWidth := 13 -}}
-{{- $accessWidth := 24 }}
+{{- $accessWidth := 27 -}}
+{{- $authorWidth := 11 }}
 
 <h1 id="heading">Index of {{ .RelPermalink }}</h1>
 <pre>
@@ -20,6 +38,7 @@
   {{- "Name" }}{{ partial "pad.html" (dict "s" "Name" "w" $nameWidth) }}{{ $gap }}
   {{- "Last modified" }}{{ $gap }}{{ $gap }}
   {{- "Access" }}{{ partial "pad.html" (dict "s" "Access" "w" $accessWidth) }}
+  {{- "Author" }}{{ partial "pad.html" (dict "s" "Author" "w" $authorWidth) }}
   {{- "Category" }}
 <hr>
   {{- printf "%*s" $noWidth "" }}{{ $gap -}}
@@ -32,20 +51,21 @@
     {{- partial "pad.html" (dict "s" $name "w" $nameWidth) }}{{ $gap }}
     {{- printf "%*s" $dateWidth "-" }}{{ $gap }}{{ $gap }}
     {{- printf "%*s" $accessWidth "" }}
+    {{- printf "%*s" $authorWidth "" }}
     {{- len (where $items "category" .) }} items
 </span>
 {{- end }}<hr>
 {{- $number := len $items }}
 {{- range $item := $items }}
-  {{- $date := partial "date.html" $item.date }}
   {{- $links := partial "links.html" (dict "item" $item "letter" $letter) }}
   {{- $access := delimit (apply $links "index" "." "label") ", " -}}
   <span data-category="{{ $item.category }}">
     {{- printf "%03d." $number }}{{ $gap }}
     {{- $item.title }}{{ partial "pad.html" (dict "s" $item.title "w" $nameWidth) }}{{ $gap }}
-    {{- printf "%*s" $dateWidth $date }}{{ $gap }}{{ $gap }}
+    {{- printf "%*s" $dateWidth $item.shown }}{{ $gap }}{{ $gap }}
     {{- range $i, $link := $links }}{{ if $i }}, {{ end }}<a href="{{ $link.url }}">{{ $link.label }}</a>{{ end }}
     {{- partial "pad.html" (dict "s" $access "w" $accessWidth) }}
+    {{- $item.author }}{{ partial "pad.html" (dict "s" $item.author "w" $authorWidth) }}
     {{- $item.category }}
 </span>
   {{- $number = sub $number 1 }}
