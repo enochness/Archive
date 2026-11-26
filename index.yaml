@@ -1578,6 +1578,7 @@ items:
 
   - title: "Problem Set 1"
     id: "A25005"
+    pdf: "/a/pdf/A25005.pdf"
     source: "https://github.com/enochness/Archive/blob/main/A/tex/A25005.tex"
     author: "Enoch Yu"
     date: "April 2025"
